@@ -1,0 +1,1 @@
+export const ProfileNavBar = ["name", "review"];
