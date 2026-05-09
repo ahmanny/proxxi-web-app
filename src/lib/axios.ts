@@ -68,13 +68,7 @@ API.interceptors.request.use(
       config.headers["X-User-Role"] = userRole;
     }
 
-    // Development logging
-    if (IS_DEVELOPMENT) {
-      console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url}`, {
-        baseURL: config.baseURL,
-        hasToken: !!accessToken,
-      });
-    }
+ 
 
     return config;
   },
@@ -92,7 +86,7 @@ API.interceptors.response.use(
   (response: AxiosResponse) => {
     // Development logging
     if (IS_DEVELOPMENT) {
-      console.log(`[API Response] ${response.status} ${response.config.url}`);
+      // Dev logging: API Response
     }
 
     return response;
@@ -191,14 +185,11 @@ async function refreshAccessToken(): Promise<void> {
   const refreshToken = cookies["refresh-token"];
   const userRole = cookies["user-role"];
 
-  console.log("[Token Refresh] Attempting refresh", { userRole, hasRefreshToken: !!refreshToken });
-
   if (!refreshToken) {
     throw new Error("No refresh token available");
   }
 
   const refreshEndpoint = userRole === "admin" ? "/auth/admin/refresh" : "/authentication/refresh-token";
-  console.log("[Token Refresh] Using endpoint:", refreshEndpoint);
 
   try {
     const response = await axios.post<TokenResponse>(
@@ -206,8 +197,6 @@ async function refreshAccessToken(): Promise<void> {
       { refresh_token: refreshToken },
       { withCredentials: true }
     );
-
-    console.log("[Token Refresh] Response:", response.data);
 
     const { access_token, refresh_token: newRefreshToken } = (response.data as any).data?.tokens || (response.data as any).tokens;
 

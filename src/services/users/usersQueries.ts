@@ -5,8 +5,7 @@ import { updateUser } from "./usersServices";
 export const useUpdateUser = () => {
     return useMutation({
         mutationFn: updateUser,
-        onSuccess: (data) => {
-            console.log(data);
+        onSuccess: () => {
         }
     })
 }

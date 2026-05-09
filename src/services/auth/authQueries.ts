@@ -109,7 +109,6 @@ export const useLoginAdmin = () => {
     return useMutation({
         mutationFn: loginAdmin,
         onSuccess: (response) => {
-            console.log("Admin login successful:", response.data);
             const { tokens, user } = response.data;
 
             // save the access token 
@@ -146,8 +145,7 @@ export const useLoginAdmin = () => {
 export const useFogottenPassword = () => {
     return useMutation({
         mutationFn: fogottenPassword,
-        onSuccess: (data) => {
-            console.log(data);
+        onSuccess: () => {
         }
     })
 }
@@ -156,8 +154,7 @@ export const useFogottenPassword = () => {
 export const useResetPassword = () => {
     return useMutation({
         mutationFn: resetPassword,
-        onSuccess: (data) => {
-            console.log(data);
+        onSuccess: () => {
         }
     })
 }
