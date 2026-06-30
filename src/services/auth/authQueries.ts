@@ -133,6 +133,7 @@ export const useLoginAdmin = () => {
             // Map backend 'role' to 'adminRole' for frontend store
             const userWithAdminRole = {
                 ...user,
+                name: `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Admin",
                 adminRole: user.role
             };
             userStore.login(userWithAdminRole, true)

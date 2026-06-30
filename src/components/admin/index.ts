@@ -1,4 +1,4 @@
-export { AdminSidebar, navigationGroups } from './AdminSidebar';
+export { AdminSidebar } from './AdminSidebar';
 export { AdminSummaryCard, AdminMetricCard } from './AdminSummaryCard';
 export { AdminTable } from './AdminTable';
 export { AdminFilters } from './AdminFilters';

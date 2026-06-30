@@ -47,6 +47,18 @@ const API = axios.create({
   },
 });
 
+let isRefreshing = false;
+let refreshSubscribers: ((token: string) => void)[] = [];
+
+function subscribeTokenRefresh(cb: (token: string) => void) {
+  refreshSubscribers.push(cb);
+}
+
+function onRefreshed(token: string) {
+  refreshSubscribers.forEach((cb) => cb(token));
+  refreshSubscribers = [];
+}
+
 // ===========================================
 // Request Interceptor
 // ===========================================
@@ -111,35 +123,51 @@ API.interceptors.response.use(
     // Handle 401 - Unauthorized (Token expired/invalid)
     if (status === 401) {
       // Check if it's a token expiration error (code 106)
-      const isTokenExpired = data?.code === 106 || data?.message?.includes("token");
+      const isTokenExpired = data?.code === 106 || data?.message?.includes("token") || data?.message === "jwt expired";
 
       if (isTokenExpired && !originalRequest._retry) {
         originalRequest._retry = true;
 
-        try {
-          await refreshAccessToken();
-          
-          // Retry the original request
-          const cookies = parseCookies();
-          const newToken = cookies["access-token"];
-          
-          if (originalRequest.headers) {
-            originalRequest.headers.Authorization = `Bearer ${newToken}`;
-          }
-          
-          return API(originalRequest);
-        } catch (refreshError) {
-          // Token refresh failed - force logout
-          handleSessionExpired();
-          return Promise.reject({
-            message: "Session expired. Please log in again.",
-            status: 401,
-          });
+        if (typeof window !== "undefined" && window.location.pathname === "/admin/login") {
+          destroyCookie(null, "access-token", { path: "/" });
+          destroyCookie(null, "refresh-token", { path: "/" });
+          destroyCookie(null, "user-role", { path: "/" });
+          return Promise.reject(error);
         }
+
+        if (!isRefreshing) {
+          isRefreshing = true;
+
+          refreshAccessToken()
+            .then(() => {
+              isRefreshing = false;
+              const cookies = parseCookies();
+              const newToken = cookies["access-token"];
+              onRefreshed(newToken);
+            })
+            .catch((err) => {
+              isRefreshing = false;
+              handleSessionExpired();
+              return Promise.reject(err);
+            });
+        }
+
+        const retryOriginalRequest = new Promise((resolve) => {
+          subscribeTokenRefresh((token) => {
+            if (originalRequest.headers) {
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+            }
+            resolve(API(originalRequest));
+          });
+        });
+
+        return retryOriginalRequest;
       }
 
-      // Non-token related 401 (e.g., invalid credentials)
-      handleSessionExpired();
+      // Non-token related 401 (e.g., invalid credentials) should not log out if on login screen
+      if (typeof window !== "undefined" && !window.location.pathname.includes("/login")) {
+        handleSessionExpired();
+      }
     }
 
     // Handle 403 - Forbidden
