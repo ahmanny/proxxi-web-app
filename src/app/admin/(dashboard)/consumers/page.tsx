@@ -2,13 +2,13 @@
 
 import { useMemo, useState } from "react";
 import { useFetchConsumers } from "@/services/admin/adminQueries";
-import { AdminSummaryCard } from "@/components/admin/AdminSummaryCard";
+
 import { AdminFilters } from "@/components/admin/AdminFilters";
 import { AdminTable, Column } from "@/components/admin/AdminTable";
 import { AdminExportButton } from "@/components/admin/AdminExportButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Users, Eye, Pencil, Mail, Phone, ChevronRight } from "lucide-react";
+import { Eye, Pencil, Mail, Phone, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import {
   Dialog,
@@ -120,7 +120,7 @@ export default function ConsumersPage() {
       key: "actions",
       header: "Actions",
       render: (row) => (
-        <Button asChild>
+        <Button variant="outline" size="sm" asChild>
           <Link href={`/admin/consumers/${row._id}`}>
             View Details
             <ChevronRight className="ml-1 h-4 w-4" />
@@ -148,23 +148,11 @@ export default function ConsumersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Consumers</h1>
-          <p className="text-muted-foreground mt-1">
-            View and manage consumer accounts.
-          </p>
         </div>
         <AdminExportButton
           exportUrl="/admin/export/consumers"
           filename="consumers.csv"
           label="Export Consumers"
-        />
-      </div>
-
-      {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-4">
-        <AdminSummaryCard
-          title="Total Consumers"
-          value={consumers.length}
-          icon={Users}
         />
       </div>
 
@@ -184,6 +172,7 @@ export default function ConsumersPage() {
         isLoading={isLoading}
         emptyMessage="No consumers found"
         keyExtractor={(c) => c._id}
+        searchable={false}
       />
 
       {/* Pagination */}

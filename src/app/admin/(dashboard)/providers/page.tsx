@@ -6,7 +6,7 @@ import {
   useApproveProvider,
   useRejectProvider,
 } from "@/services/admin/adminQueries";
-import { AdminSummaryCard } from "@/components/admin/AdminSummaryCard";
+
 import { AdminFilters } from "@/components/admin/AdminFilters";
 import { AdminTable, Column } from "@/components/admin/AdminTable";
 import { AdminExportButton } from "@/components/admin/AdminExportButton";
@@ -171,7 +171,7 @@ export default function ProvidersPage() {
       key: "actions",
       header: "Actions",
       render: (p) => (
-        <Button asChild>
+        <Button variant="outline" size="sm" asChild>
           <Link href={`/admin/providers/${p._id}`}>
             View Details
             <ChevronRight className="ml-1 h-4 w-4" />
@@ -181,43 +181,17 @@ export default function ProvidersPage() {
     },
   ];
 
-  const pendingCount = providers.filter((p) => p.status === "pending").length;
-  const approvedCount = providers.filter((p) => p.status === "approved").length;
-
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Providers</h1>
-          <p className="text-muted-foreground mt-1">Manage service providers</p>
         </div>
         <AdminExportButton
           exportUrl="/admin/export/providers"
           filename="providers.csv"
           label="Export Providers"
-        />
-      </div>
-
-      {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <AdminSummaryCard
-          title="Total Providers"
-          value={providers.length}
-          icon={UserCog}
-          color="primary"
-        />
-        <AdminSummaryCard
-          title="Pending Approval"
-          value={pendingCount}
-          icon={UserCog}
-          color="yellow"
-        />
-        <AdminSummaryCard
-          title="Active"
-          value={approvedCount}
-          icon={UserCog}
-          color="green"
         />
       </div>
 

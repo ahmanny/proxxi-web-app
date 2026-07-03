@@ -63,6 +63,155 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+
+  .admin-theme {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 240 5.9% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
+    --muted: 240 5.9% 10%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 5.9% 10%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --warning: 37.9 95.8% 53.1%;
+    --warning-foreground: 0 0% 0%;
+    --success: 142.1 76.2% 36.3%;
+    --success-foreground: 0 0% 100%;
+    --border: 240 5.9% 15%;
+    --input: 240 5.9% 15%;
+    --ring: 0 0% 100%;
+    --sidebar: 0 0% 3%;
+    --sidebar-foreground: 0 0% 100%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
+    color-scheme: dark;
+  }
+
+  .admin-theme textarea,
+  .admin-theme input:not([type="checkbox"]):not([type="radio"]) {
+    background-color: #09090b !important;
+    border-color: #27272a !important;
+    color: #f4f4f5 !important;
+  }
+
+  .admin-theme textarea::placeholder,
+  .admin-theme input::placeholder {
+    color: #71717a !important;
+  }
+
+  /* Override light slate/white helpers in admin theme */
+  .admin-theme .bg-white {
+    background-color: hsl(var(--card)) !important;
+  }
+  .admin-theme .bg-slate-50 {
+    background-color: hsl(240 5.9% 6%) !important;
+  }
+  .admin-theme .bg-slate-100 {
+    background-color: hsl(240 5.9% 10%) !important;
+  }
+  .admin-theme .bg-slate-200 {
+    background-color: hsl(240 5.9% 15%) !important;
+  }
+  
+  .admin-theme .border-slate-200 {
+    border-color: hsl(var(--border)) !important;
+  }
+  .admin-theme .border-slate-100 {
+    border-color: hsl(240 5.9% 10%) !important;
+  }
+  
+  .admin-theme .text-slate-900 {
+    color: hsl(var(--foreground)) !important;
+  }
+  .admin-theme .text-slate-700 {
+    color: hsl(240 5% 85%) !important;
+  }
+  .admin-theme .text-slate-500 {
+    color: hsl(var(--muted-foreground)) !important;
+  }
+
+  /* Status Colors overrides for dark theme */
+  .admin-theme .bg-blue-50,
+  .admin-theme .bg-blue-100 {
+    background-color: rgba(59, 130, 246, 0.12) !important;
+    border-color: rgba(59, 130, 246, 0.25) !important;
+  }
+  .admin-theme .text-blue-700,
+  .admin-theme .text-blue-800,
+  .admin-theme .text-blue-600 {
+    color: #60a5fa !important;
+  }
+
+  .admin-theme .bg-green-50,
+  .admin-theme .bg-green-100,
+  .admin-theme .bg-emerald-50,
+  .admin-theme .bg-emerald-100 {
+    background-color: rgba(16, 185, 129, 0.12) !important;
+    border-color: rgba(16, 185, 129, 0.25) !important;
+  }
+  .admin-theme .text-green-700,
+  .admin-theme .text-green-800,
+  .admin-theme .text-green-600,
+  .admin-theme .text-emerald-700,
+  .admin-theme .text-emerald-800 {
+    color: #34d399 !important;
+  }
+
+  .admin-theme .bg-yellow-50,
+  .admin-theme .bg-yellow-100,
+  .admin-theme .bg-amber-50,
+  .admin-theme .bg-amber-100 {
+    background-color: rgba(245, 158, 11, 0.12) !important;
+    border-color: rgba(245, 158, 11, 0.25) !important;
+  }
+  .admin-theme .text-yellow-700,
+  .admin-theme .text-yellow-800,
+  .admin-theme .text-yellow-600,
+  .admin-theme .text-amber-700,
+  .admin-theme .text-amber-800 {
+    color: #fbbf24 !important;
+  }
+
+  .admin-theme .bg-red-50,
+  .admin-theme .bg-red-100 {
+    background-color: rgba(239, 68, 68, 0.12) !important;
+    border-color: rgba(239, 68, 68, 0.25) !important;
+  }
+  .admin-theme .text-red-700,
+  .admin-theme .text-red-800,
+  .admin-theme .text-red-600 {
+    color: #f87171 !important;
+  }
+
+  .admin-theme .bg-purple-50,
+  .admin-theme .bg-purple-100 {
+    background-color: rgba(168, 85, 247, 0.12) !important;
+    border-color: rgba(168, 85, 247, 0.25) !important;
+  }
+  .admin-theme .text-purple-700,
+  .admin-theme .text-purple-800,
+  .admin-theme .text-purple-600 {
+    color: #c084fc !important;
+  }
+
+  /* Buttons & outlines overrides inside admin theme */
+  .admin-theme button.border-input,
+  .admin-theme .border-input {
+    border-color: hsl(240 5.9% 15%) !important;
+  }
+
+  .admin-theme pre {
+    background-color: #09090b !important;
+    border-color: #1f1f23 !important;
+    color: #e4e4e7 !important;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-poppins), system-ui, -apple-system,
@@ -326,4 +475,48 @@ body {
   @apply text-[#0E1422] dark:text-[#f0f2f5] font-bold text-[16px] sm:text-[22px];
 }
 
-/* button and input */
+/* Custom scrollbar styling */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+.admin-theme ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.admin-theme ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.admin-theme {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
