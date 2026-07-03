@@ -120,7 +120,7 @@ export default function ConsumersPage() {
       key: "actions",
       header: "Actions",
       render: (row) => (
-        <Button asChild>
+        <Button variant="outline" size="sm" asChild>
           <Link href={`/admin/consumers/${row._id}`}>
             View Details
             <ChevronRight className="ml-1 h-4 w-4" />

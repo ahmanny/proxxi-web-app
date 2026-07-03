@@ -171,7 +171,7 @@ export default function ProvidersPage() {
       key: "actions",
       header: "Actions",
       render: (p) => (
-        <Button asChild>
+        <Button variant="outline" size="sm" asChild>
           <Link href={`/admin/providers/${p._id}`}>
             View Details
             <ChevronRight className="ml-1 h-4 w-4" />

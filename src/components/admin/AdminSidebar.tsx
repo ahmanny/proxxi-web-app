@@ -168,7 +168,12 @@ export function AdminSidebar({ onClose, onLogout }: AdminSidebarProps) {
   const router = useRouter();
   const user = useUserStore((state) => state.user);
 
-  // Try to load role from cookies instantly to bypass store hydration lag
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Load role from cookies fallback if user store hydration takes time or is empty
   const cookies = parseCookies();
   const userRole = user?.adminRole || (cookies["admin-role"] as RolePermission);
 
@@ -204,6 +209,54 @@ export function AdminSidebar({ onClose, onLogout }: AdminSidebarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  if (!mounted) {
+    return (
+      <aside className="bg-sidebar text-sidebar-foreground border-r border-border h-full flex flex-col w-64 select-none">
+        {/* Branding header */}
+        <div className="flex h-14 items-center justify-between border-b border-border px-4 shrink-0">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center font-bold text-sm text-foreground">
+              P
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold tracking-tight text-foreground leading-tight">Proxxi</span>
+              <span className="text-[10px] text-zinc-500 leading-none mt-0.5 font-medium">Executive Portal</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Skeleton items list */}
+        <div className="flex-1 overflow-y-auto p-3 space-y-6">
+          <div className="space-y-2">
+            <div className="h-2.5 w-16 bg-zinc-900 rounded animate-pulse" />
+            <div className="space-y-1.5">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="h-9 w-full bg-zinc-900/40 rounded-lg animate-pulse" />
+              ))}
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="h-2.5 w-20 bg-zinc-900 rounded animate-pulse" />
+            <div className="space-y-1.5">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-9 w-full bg-zinc-900/40 rounded-lg animate-pulse" />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer profile skeleton */}
+        <div className="border-t border-border p-3 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-zinc-900 animate-pulse shrink-0" />
+          <div className="flex-1 space-y-1.5">
+            <div className="h-3 w-24 bg-zinc-900 rounded animate-pulse" />
+            <div className="h-2.5 w-16 bg-zinc-900/60 rounded animate-pulse" />
+          </div>
+        </div>
+      </aside>
+    );
+  }
+
   const canAccessItem = (item: NavItem): boolean => {
     if (!item.requiredRole) return true;
     if (!userRole) return false;
@@ -220,7 +273,7 @@ export function AdminSidebar({ onClose, onLogout }: AdminSidebarProps) {
     },
   ];
 
-  const userInitial = user.name?.charAt(0)?.toUpperCase() || "A";
+  const userInitial = user?.name?.charAt(0)?.toUpperCase() || "A";
   const roleLabel = getAdminRoleLabel(userRole);
 
   return (

@@ -203,43 +203,12 @@ export default function UsersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Users</h1>
-          <p className="text-muted-foreground mt-1">
-            View and manage consumers and providers.
-          </p>
         </div>
         <AdminExportButton
           exportUrl="/admin/export/users"
           filename="users.csv"
           label="Export Users"
           queryParams={exportQuery}
-        />
-      </div>
-
-      {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-4">
-        <AdminSummaryCard
-          title="Total Users"
-          value={users.length}
-          icon={Users}
-          color="primary"
-        />
-        <AdminSummaryCard
-          title="Consumers"
-          value={consumerCount}
-          icon={Users}
-          color="blue"
-        />
-        <AdminSummaryCard
-          title="Providers"
-          value={providerCount}
-          icon={Users}
-          color="purple"
-        />
-        <AdminSummaryCard
-          title="Both Roles"
-          value={bothRolesCount}
-          icon={Users}
-          color="green"
         />
       </div>
 

@@ -37,6 +37,16 @@ const getResolutionBadge = (resolution: string) => {
   }
 };
 
+const formatReason = (reason: string) => {
+  if (!reason) return "-";
+  return reason
+    .replace(/_/g, " ")
+    .replace(/-/g, " ")
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 export default function DisputesPage() {
   const { data, isLoading, error, refetch } = useFetchDisputes();
   const [searchTerm, setSearchTerm] = useState("");
@@ -83,7 +93,7 @@ export default function DisputesPage() {
     {
       key: "reason",
       header: "Reason",
-      render: (d) => <span className="font-medium">{d.reason}</span>,
+      render: (d) => <span className="font-medium">{formatReason(d.reason)}</span>,
     },
     {
       key: "description",
@@ -229,7 +239,7 @@ export default function DisputesPage() {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Reason</p>
-                  <p className="font-medium">{selectedDispute.reason}</p>
+                  <p className="font-medium">{formatReason(selectedDispute.reason)}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Status</p>

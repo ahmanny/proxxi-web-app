@@ -127,7 +127,7 @@ export function AdminFilters({
 
         {/* Action Buttons */}
         <div className="flex gap-2">
-          <Button onClick={handleSearch} className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/95">
+          <Button onClick={handleSearch} variant="outline" className="shrink-0 bg-transparent border-zinc-800 text-zinc-300 hover:bg-zinc-900 hover:text-white">
             <Filter className="h-4 w-4 mr-2" />
             Filter
           </Button>
